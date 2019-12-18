@@ -15,15 +15,21 @@ export default class MainPage extends Component {
 
 
     return (
-      <div className="row">
+      <div className="row wrapper">
       <div className="col-md-12 d-flex flex-wrap justify-content-center">
+
+      {(!dataShow.length)?
+        <h5 className="defWtf blink">Here will be your films...</h5> :null}
+
+
     {preloader ? 
     <div className="spinner">
-      <p>Wait a second your films are loading...</p>
+    
+      <h6 className="titleSearh">Wait a second your films are loading...</h6>
       <div className = "d-flex justify-content-center">
-      <div class="spinner-grow text-success"></div>
-      <div class="spinner-grow text-success"></div>
-      <div class="spinner-grow text-success"></div>
+      <div class="spinner-grow"></div>
+      <div class="spinner-grow"></div>
+      <div class="spinner-grow"></div>
 
     </div>
     </div>

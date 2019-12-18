@@ -3,11 +3,11 @@
 //Экшен это просто обьект а екшен криетор это фция которая возвращает обьект
 export const SEND_REQUEST = 'SEND_REQUEST';
 export const GET_REQUEST_SUCCESS = 'GET_REQUEST_SUCCESS';
-export const ACTION_CHANGE_INPUT_VALUE = 'ACTION_CHANGE_INPUT_VALUE';
 
-//вынести потом экшен на инпут который в отдельную фцию
 
-export function setRequest(data, newInputValue) {
+export function setRequest(data) {
+
+
   return dispatch => {
 
     dispatch({
@@ -24,10 +24,7 @@ export function setRequest(data, newInputValue) {
     }, 3000)
 
 
-    dispatch({
-      type:ACTION_CHANGE_INPUT_VALUE,
-      payload: newInputValue,
-    })
+   
 
   }
 }

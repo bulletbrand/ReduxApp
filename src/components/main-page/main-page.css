@@ -1,15 +1,21 @@
+
 .card  {
   width:300px;
-  background:rgb(240, 237, 237);
-  border-radius: 20px;
+  background:rgb(255, 255, 255);
+  border-radius: 5px;
 }
 
+.card:hover  {
+  width:305px;
+  background:rgb(240, 237, 237);
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5); }
 
 .pictures {
   width:300px;
   height:300px;
-  opacity: 0.6;
-  border-radius: 20px;
+  opacity: 0.7;
+  border-radius: 5px;
 } 
 
 .pictures:hover {
@@ -19,4 +25,48 @@
 
 .btn {
   width:100px;
+}
+
+.titleSearh {
+  color: rgb(255, 225, 55);
+  font-family: 'Roboto', sans-serif;
+
+}
+
+.spinner-grow {
+  background: rgb(255, 225, 55);
+}
+
+.spinner {
+  margin-top:180px;
+}
+
+.favorBtn {
+  background: rgb(255, 225, 55);
+  color:white;
+}
+
+.defWtf {
+  color: rgb(255, 225, 55);
+  font-family: 'Roboto', sans-serif;
+  margin-top:200px;
+}
+.blink {
+  animation-name: blinker;
+  animation-iteration-count: infinite;
+  animation-timing-function: cubic-bezier(1.0,2.0,0,1.0);
+  animation-duration: 3s;
+  -webkit-animation-name: blinker;
+  -webkit-animation-iteration-count: infinite;
+ 
+}
+ 
+@keyframes blinker {
+  from { opacity: 1.0; }
+  to { opacity: 0.0; }
+}
+ 
+@-webkit-keyframes blinker {
+  from { opacity: 1.0; }
+  to { opacity: 0.0; }
 }

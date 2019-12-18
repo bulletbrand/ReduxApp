@@ -1,9 +1,10 @@
-import { SEND_REQUEST, GET_REQUEST_SUCCESS, ACTION_CHANGE_INPUT_VALUE  } from '../actions/MainActions'
+import { SEND_REQUEST, GET_REQUEST_SUCCESS  } from '../actions/MainActions'
+import {  ACTION_CHANGE_INPUT_VALUE  } from '../actions/InputAction'
 
 const initialState = {
   data: [],
   preloader: false,
-  inputValue: 'war'
+  inputValue: ''
 }
 
 
@@ -14,7 +15,7 @@ export function mainReducer(state = initialState, action) {
       return { ...state, data: action.payload,preloader: true }
 
       case GET_REQUEST_SUCCESS:
-      return { ...state, photos: action.payload, preloader: false }
+      return { ...state, preloader: false }
 
       case ACTION_CHANGE_INPUT_VALUE:
         return {...state, inputValue:action.payload}

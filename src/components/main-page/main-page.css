@@ -1,0 +1,22 @@
+.card  {
+  width:300px;
+  background:rgb(240, 237, 237);
+  border-radius: 20px;
+}
+
+
+.pictures {
+  width:300px;
+  height:300px;
+  opacity: 0.6;
+  border-radius: 20px;
+} 
+
+.pictures:hover {
+  cursor: pointer;
+  opacity:1;
+}
+
+.btn {
+  width:100px;
+}

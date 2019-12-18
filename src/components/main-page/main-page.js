@@ -5,9 +5,7 @@ export default class MainPage extends Component {
 
 
   render() {
-    const data =this.props.data;
-    const preloader = this.props.preloader;
-    console.log("preloader", preloader)
+    const {data, preloader} =this.props;
     const dataShow = data.map(({show}) =>(
       <div key={show.id}>
       <MainPageItem 
@@ -15,7 +13,7 @@ export default class MainPage extends Component {
       </div>
     ))
 
-    //тут перебрат данные и отрендерить ниже компонент тоесть вместо name Должен быть запрос
+
     return (
       <div className="row">
       <div className="col-md-12 d-flex flex-wrap justify-content-center">

@@ -6,12 +6,14 @@ import { setRequest } from '../actions/MainActions'
 import axios from 'axios'
 
 
+const PATH_API_URL = 'http://api.tvmaze.com/search/shows?q=';
+
 //Этот класс контейнер для всего так как подключен к редакс
 class App extends Component {
 
-  onBtnClick = () => {
-    
-   return axios.get('http://api.tvmaze.com/search/shows?q=war')
+
+  requestAxious = (value) => {  
+   return axios.get(`${PATH_API_URL}${value}`)
     .then(res => {
       localStorage.setItem('data', JSON.stringify(res.data))
 
@@ -37,8 +39,9 @@ class App extends Component {
     return (
       <React.Fragment>
   
-      <Header />
-      <button onClick={this.onBtnClick}>2018</button>
+      <Header
+      requestAxious = {this.requestAxious} />
+
       <MainPage  data = {data}
        preloader = {preloader}
         />
@@ -50,6 +53,7 @@ class App extends Component {
 
 
 //получить данные из стейта по сути это подписка на обновление данных из стейта
+//!!!!!!!!!а connect уже запишет в пропсы эти данные тоесть store.main как main будет доступно из this.props в компоненте App
 const mapStateToProps = store => {
   console.log(store) // посмотрим, что же у нас в store?
   return { 

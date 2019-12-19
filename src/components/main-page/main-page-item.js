@@ -19,8 +19,8 @@ const MainPageItem  = ({ show }) => {
                 <h5 className="card-title">{show.type}</h5>
                 <h4 className="card-title">{show.name}</h4>
                 <p className="card-text">{summaryq}...</p>
-                <a className="btn btn-primary " href="#">Favorite</a>
-                <a className="btn btn-primary ml-4 ">Info</a >
+                <a className="btn btn-primary favorBtn " href="#">Favorite</a>
+                <a className="btn btn-primary ml-4 InfoBtn ">Info</a >
             </div>
         </div>
     );

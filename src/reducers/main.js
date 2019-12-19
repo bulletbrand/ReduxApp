@@ -12,10 +12,10 @@ const initialState = {
 export function mainReducer(state = initialState, action) {
   switch (action.type) {
     case SEND_REQUEST:
-      return { ...state, data: action.payload,preloader: true }
+      return { ...state,preloader: true }  //начинается запрос и флажок ставится тру тоесть показать прелоадер
 
       case GET_REQUEST_SUCCESS:
-      return { ...state, preloader: false }
+      return { ...state,data: action.payload, preloader: false } //данные тутачки приходят а не в самом запросе
 
       case ACTION_CHANGE_INPUT_VALUE:
         return {...state, inputValue:action.payload}

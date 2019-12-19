@@ -4,6 +4,7 @@ import  MainPage  from '../components/main-page/main-page'
 import  Header  from '../components/header/header'
 import { setRequest } from '../actions/MainActions'
 import axios from 'axios'
+//store не приходится писать каждый раз при диспатче и тд так как у нас есть connect
 
 
 const PATH_API_URL = 'http://api.tvmaze.com/search/shows?q=';
@@ -17,7 +18,7 @@ class App extends Component {
     .then(res => {
       localStorage.setItem('data', JSON.stringify(res.data))
 
-    return this.props.setRequest(res.data)
+    return this.props.setRequestAction(res.data)  //store.dispatch(setRequest(data)) чтобы так не писать мы просто вытянули само поле с props setRequestAction которое в пропс передается в mapDISPATCH TO PROPS
     ; 
     })
 
@@ -25,6 +26,7 @@ class App extends Component {
   }
   
   componentDidMount() {
+    //тут сделать сохранение локал стореджа в стейт редакса 
     console.log("ComponentDidMount")
   }
 
@@ -55,23 +57,26 @@ class App extends Component {
 //получить данные из стейта по сути это подписка на обновление данных из стейта
 //!!!!!!!!!а connect уже запишет в пропсы эти данные тоесть store.main как main будет доступно из this.props в компоненте App
 const mapStateToProps = store => {
-  console.log(store) // посмотрим, что же у нас в store?
+  console.log(store) 
   return { 
-    main: store.main,                 //store.(файл с редюсером как назван нужным с которого вытаскиваем потом в пропсы)
+    main: store.main,                //мы не ток получаем тут данные которые нам нужны(кусочки) но еще и подписуемся сразу на их исзменения (спасибо connect)
     favorite: store.favorite
   }
 }
 
-//отправка в стор даннЫх какие то тоесть изменение его по какому то действию нашему
-//dispatch позволяет отправлять данные редюсеру
-//тут в стор будет data диспатчится с запроса axious при самбите формы потому можно хедер тут поместить
 
+// Эта фция диспетчит наш action creator setRequest в редюсер, передается она туда с помощью connecy
+//это обьект и содержит он поле setRequest, так в последиствии можно будет обратиться к пропсу этому
+//тоесть работают по типу bindActionCreators
 const mapDispatchToProps = dispatch => ({
 
-    setRequest: data => dispatch(setRequest(data)),  //click() => уолбек this.props.setRequest(res.data) => и тут єтот сет реквест диспатчу  екшен в редюсер и редюсер уже  реагирует на єтот екщен
-}) //setRequest это фция в обьекте которая диспатчит наши данные setReqiest в пропсы 
+    setRequestAction: data => dispatch(setRequest(data)),  //!тоесть екшен можно было бы передавать тут а не с файла actions
+}) 
 
 
+
+
+//отправляю с помощью connect в редюсер сразу фции с компонента App и получаю текущий стейт пропсами
 export default connect(
   mapStateToProps,
   mapDispatchToProps

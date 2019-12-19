@@ -1,7 +1,19 @@
 export const ACTION_CHANGE_INPUT_VALUE = 'ACTION_CHANGE_INPUT_VALUE';
 
-//вынести потом экшен на инпут который в отдельную фцию
 
+//это екшен криетор он возвращает наш екшен, а диспатчится он в mapDispatch to props
+// просто чтобы после действия не писать store.dispatch(setRequest(data)) мы это делаем в mapdispatchtoprops
+//
+export const setInputValue = (newInputValue) =>({
+
+      type:ACTION_CHANGE_INPUT_VALUE,
+      payload: newInputValue,
+    
+})
+
+
+
+/*
 
 export function setInputValue(newInputValue) {
   return {
@@ -10,3 +22,4 @@ export function setInputValue(newInputValue) {
     
   }
 }
+*/

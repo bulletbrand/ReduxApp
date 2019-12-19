@@ -5,7 +5,7 @@ export const SEND_REQUEST = 'SEND_REQUEST';
 export const GET_REQUEST_SUCCESS = 'GET_REQUEST_SUCCESS';
 
 
-export function setRequest(data) {
+export const setRequest = (data) => {
 
 
   return dispatch => {
@@ -15,11 +15,11 @@ export function setRequest(data) {
       payload: data,
     })
 
-
+//тут не обязи ставить таймер у нас может біть просто асинхронный запрос где то в app и все это чисто прелоадер показат ьчтобы
     setTimeout(() => {
       dispatch({
         type: GET_REQUEST_SUCCESS,
-        payload: [1, 2, 3, 4, 5],
+        payload: data,
       })
     }, 3000)
 

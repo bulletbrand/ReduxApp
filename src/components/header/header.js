@@ -54,6 +54,7 @@ const Header = ({requestAxious,inputValue,dispatch}) => {
 
 
 
+//Это тоже можно было пропсами перекинуть а не создавать тут отдельно connect
 const mapStateToProps = store => {
   console.log("header", store) //получил доступ к стору
   return { 

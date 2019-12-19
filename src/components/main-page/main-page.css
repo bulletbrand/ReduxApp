@@ -6,9 +6,7 @@
 }
 
 .card:hover  {
-  width:305px;
   background:rgb(240, 237, 237);
-  border-radius: 20px;
   box-shadow: 0 0 10px rgba(0,0,0,0.5); }
 
 .pictures {
@@ -49,13 +47,14 @@
 .defWtf {
   color: rgb(255, 225, 55);
   font-family: 'Roboto', sans-serif;
-  margin-top:200px;
+  position: fixed;
+  top:100px;
 }
 .blink {
   animation-name: blinker;
   animation-iteration-count: infinite;
   animation-timing-function: cubic-bezier(1.0,2.0,0,1.0);
-  animation-duration: 3s;
+  animation-duration: 4s;
   -webkit-animation-name: blinker;
   -webkit-animation-iteration-count: infinite;
  
@@ -69,4 +68,15 @@
 @-webkit-keyframes blinker {
   from { opacity: 1.0; }
   to { opacity: 0.0; }
+}
+
+.favorBtn {
+background: black;
+color:white;
+font-family: 'Roboto', sans-serif;
+
+}
+
+.InfoBtn {
+  background: black;
 }

@@ -1,10 +1,16 @@
-import { SEND_REQUEST, GET_REQUEST_SUCCESS  } from '../actions/MainActions'
+import { SEND_REQUEST, GET_REQUEST_SUCCESS,GET_LOCAL, GET_INFO ,LOGIN_FAIL} from '../actions/MainActions'
 import {  ACTION_CHANGE_INPUT_VALUE  } from '../actions/InputAction'
 
 const initialState = {
   data: [],
   preloader: false,
-  inputValue: ''
+  inputValue: '',
+  info:[],
+  favorite:[],
+  btnStatus:false,
+  inputStatus:false,
+  aboutTabs:false,
+  error:false
 }
 
 
@@ -19,6 +25,15 @@ export function mainReducer(state = initialState, action) {
 
       case ACTION_CHANGE_INPUT_VALUE:
         return {...state, inputValue:action.payload}
+
+      case GET_LOCAL:
+        return {...state,data:action.payload}  //это при перезагрузке страници чтобы данные оставались, нам ведь преоадер уже не нужен
+
+        case GET_INFO:
+        return {...state,info:action.payload}  //это при перезагрузке страници чтобы данные оставались, нам ведь преоадер уже не нужен
+
+case LOGIN_FAIL:
+return {...state,error:action.payload}  //это при перезагрузке страници чтобы данные оставались, нам ведь преоадер уже не нужен
 
     default:
       return state

@@ -20,7 +20,7 @@ export default class MainPage extends Component {
 
       {(!dataShow.length)?
         <h5 className="defWtf blink">Here will be your films...</h5> :null}
-
+    
 
     {preloader ? 
     <div className="spinner">

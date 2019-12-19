@@ -1,6 +1,7 @@
 import React from 'react';
 
 import './main-page.css'
+import { Link } from 'react-router-dom'
 
 
 
@@ -20,7 +21,7 @@ const MainPageItem  = ({ show }) => {
                 <h4 className="card-title">{show.name}</h4>
                 <p className="card-text">{summaryq}...</p>
                 <a className="btn btn-primary favorBtn " href="#">Favorite</a>
-                <a className="btn btn-primary ml-4 InfoBtn ">Info</a >
+                <Link  to={`/moreinfo/${show.id}`} className="btn btn-primary ml-4 InfoBtn ">Info</Link >
             </div>
         </div>
     );

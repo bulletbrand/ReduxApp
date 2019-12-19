@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { setInputValue } from '../../actions/InputAction'
+import { Link } from 'react-router-dom'
 import './header.css'
 
 //main  передал пропсом через connect потому автоматом доступны через mapStateToProps
@@ -29,18 +30,17 @@ const Header = ({requestAxious,inputValue,dispatch}) => {
           <ul className="navbar-nav mt-2 mt-lg-0">
 
             <li className="nav-item ">
-              <a  className="nav-link"  href="#"><i className="fas fa-bars"></i> Main films </a >
+              <Link to="/" className="nav-link"><i className="fas fa-bars"></i> Main films </Link >
             </li>
 
 
             <li className="nav-item">
-              <a className="nav-link" href="#"><i className="fas fa-file"></i> Faforite films</a >
+              <Link to="/favorite" className="nav-link"><i className="fas fa-file"></i> Faforite films</Link >
             </li>
 
             <li className="nav-item">
-              <a className="nav-link"  href="#"><i className="fas fa-cloud"></i> About us</a >
+              <Link to="/aboutus" className="nav-link"><i className="fas fa-cloud"></i> About us</Link >
             </li>
-
           </ul>
           <form name="main-form" className="form-inline my-2 my-lg-0" onSubmit={onSubmitHundler}>
             <input className="form-control mr-sm-4" placeholder="Find your films"  value = {inputValue} onChange = {(event) => dispatch(setInputValue(event.target.value))} type="search" />

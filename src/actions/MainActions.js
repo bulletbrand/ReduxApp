@@ -3,10 +3,27 @@
 //Экшен это просто обьект а екшен криетор это фция которая возвращает обьект
 export const SEND_REQUEST = 'SEND_REQUEST';
 export const GET_REQUEST_SUCCESS = 'GET_REQUEST_SUCCESS';
+export const GET_LOCAL = 'GET_LOCAL';
+export const GET_INFO = 'GET_INFO';
+export const LOGIN_FAIL = 'LOGIN_FAIL';
 
+export const infoRequest = (data) => {
+  return {
+    type: GET_INFO,
+    payload: data,
+  }
+}
+
+
+export const getLocal = (data) => {
+
+  return {
+    type: GET_LOCAL,
+    payload: data,
+  }
+}
 
 export const setRequest = (data) => {
-
 
   return dispatch => {
 
@@ -16,12 +33,13 @@ export const setRequest = (data) => {
     })
 
 //тут не обязи ставить таймер у нас может біть просто асинхронный запрос где то в app и все это чисто прелоадер показат ьчтобы
-    setTimeout(() => {
+  
+setTimeout(() => {
       dispatch({
         type: GET_REQUEST_SUCCESS,
         payload: data,
       })
-    }, 3000)
+    } , 2000) 
 
 
    

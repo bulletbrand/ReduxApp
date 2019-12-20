@@ -6,6 +6,16 @@ export const GET_REQUEST_SUCCESS = 'GET_REQUEST_SUCCESS';
 export const GET_LOCAL = 'GET_LOCAL';
 export const GET_INFO = 'GET_INFO';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
+export const GET_FAVOR = 'GET_FAVOR';
+
+
+export const favorData = (data) => {
+  return {
+    type: GET_FAVOR,
+    payload: data,
+  }
+}
+
 
 export const infoRequest = (data) => {
   return {

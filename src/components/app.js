@@ -5,6 +5,8 @@ import Header from '../components/header/header'
 import FavoritePage from '../components/favorite-page/favorite-page'
 import Moreinfo from '../components/more-info-page/more-info-page'
 import { setRequest, getLocal } from '../actions/MainActions'
+import { favorData } from '../actions/MainActions'
+
 import axios from 'axios'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
@@ -24,6 +26,10 @@ class App extends Component {
 
   //причина по которой пришлось локал использовать это то что с запроса прелоадер был
   componentDidMount() {
+    if (localStorage.getItem('favoriteStore')) {
+      this.props.favorDataAction(JSON.parse(localStorage.getItem('favoriteStore')))
+    }
+
     if (localStorage.getItem('data')) {
       this.props.getRequestFromLocal(JSON.parse(localStorage.getItem('data')))
     }
@@ -71,6 +77,8 @@ const mapDispatchToProps = dispatch => ({
 
   setRequestAction: data => dispatch(setRequest(data)),
   getRequestFromLocal: data => dispatch(getLocal(data)),
+  favorDataAction: data => dispatch(favorData(data)),
+
 })
 
 

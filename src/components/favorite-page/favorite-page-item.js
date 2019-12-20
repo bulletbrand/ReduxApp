@@ -3,17 +3,21 @@ import React from 'react';
 
 
 //мажорная деструктуризация 
-const FavoritePageItem = () => {
+const FavoritePageItem = ({data}) => {
 
-  
+  console.log("pages", data);
+
+    const url = "http://chto-takoe-lyubov.net/wp-content/uploads/2017/08/voprositelnyy-znak-stikhi.jpg";
+    const imagesq = (!data.image) ? url : data.image.medium; //так как некоторые image с API были null
+    const summaryq = (!data.summary) ? "No summary" : data.summary.slice(0,150).replace(/<[^>]+>/g,'');
 
     return (
         <div className="card  m-sm-2">
-            <img className="pictures"  alt="pictires from data" />
+            <img className="pictures" src = {imagesq} alt="pictires from data" />
             <div className="card-body">
-                <h4 className="card-title"></h4>
-                <h2 className="card-title"></h2>
-                <p className="card-text"></p>
+                <h4 className="card-title">{data.name}</h4>
+                <h2 className="card-title">{data.type}</h2>
+                <p className="card-text">{summaryq}</p>
                 <p className="btn btn-primary buttonColor favoriteBtn" >Delete favorite</p>
                 <p className="btn btn-primary ml-4 buttonColor">Info about film</p>
             </div>

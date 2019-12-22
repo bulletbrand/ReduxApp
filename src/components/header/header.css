@@ -47,8 +47,15 @@ INPUT.form-control:focus {
   animation-name:bounce;
   animation-duration:3s;
   animation-delay:1s;
-  
+}
 
+
+.time {
+  color:red;
+  font-size: 14px;
+}
+.timeLogo{
+  font-size:16px;
 }
 
 @keyframes bounce {

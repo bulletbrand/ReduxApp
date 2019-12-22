@@ -2,19 +2,19 @@ import React from 'react';
 import { connect } from 'react-redux'
 import { favorData } from '../../actions/MainActions'
 import FavoritePageItem from './favorite-page-item'
+import './favorite-page.css'
 
 
-
-const FavoritePage = ({favorite}) => {
+const FavoritePage = ({favorite,addToFavor}) => {
 //вытащить пропсом с стора массив файворит ииии после этого прокинуть в компонент и там подставить
 
-console.log("lol",favorite)
-  const arrayFavor = (localStorage.getItem('favoriteStore')) ? favorite.map((elem) => (
+  const arrayFavor = (localStorage.getItem('favoriteStore')) ? JSON.parse(localStorage.getItem('favoriteStore')).map((elem) => (
     <div key={elem.id}>
-      <FavoritePageItem data = {elem} />
+      <FavoritePageItem data = {elem} addToFavor = {()=>addToFavor(elem)} />
     </div>
   )) : -1;
 
+  
   return (
     <div className="booksWrapper tabcontent">
       <div className="booksContainer container d-flex flex-wrap justify-content-center">
@@ -34,7 +34,6 @@ console.log("lol",favorite)
 
 
 const mapStateToProps = store => {
-  console.log("1", store)
   return {
     favorite: store.favorite.favorite //так как в сторе есть редюсер фейаорит и в нем уже лежит феворит
   }

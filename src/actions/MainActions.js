@@ -9,6 +9,9 @@ export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const GET_FAVOR = 'GET_FAVOR';
 
 
+
+
+
 export const favorData = (data) => {
   return {
     type: GET_FAVOR,
@@ -49,7 +52,7 @@ setTimeout(() => {
         type: GET_REQUEST_SUCCESS,
         payload: data,
       })
-    } , 2000) 
+    } , 1000) 
 
 
    

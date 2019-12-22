@@ -16,6 +16,33 @@ const Header = ({requestAxious,inputValue,dispatch}) => {
     e.preventDefault();
     requestAxious(inputValue);
   }
+
+  const date = new Date()
+  const hours = date.getHours()
+  const showDate = `${date.getHours()}: ${date.getMinutes()}: ${date.getSeconds()}`
+  const styles = {
+    fontSize: 12
+  }
+
+  let timeOfDay
+  //потом вместо цвета тут менять иконку
+  if (hours < 12) {
+    timeOfDay = "morning"
+    styles.color = "green"
+
+  } else if (hours >= 12 && hours < 17) {
+    timeOfDay = "afternoon" 
+    styles.color = "yellow"
+
+  }else if (hours >= 17 && hours< 24) {
+      timeOfDay = "evening"
+      styles.color = "red"
+  } else {
+    timeOfDay = "night"
+    styles.color = "black"
+  }
+
+
  
   return (
     <div>
@@ -24,9 +51,10 @@ const Header = ({requestAxious,inputValue,dispatch}) => {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse d-flex justify-content-between" >
-          <p className="navbar-brand"><span> <i class="fas fa-cat bounce">AndersenFilms</i>
+          <p className="navbar-brand"><span> <i className="fas fa-cat bounce">AndersenFilms</i>
 
           </span></p>
+
           <ul className="navbar-nav mt-2 mt-lg-0">
 
             <li className="nav-item ">
@@ -43,6 +71,8 @@ const Header = ({requestAxious,inputValue,dispatch}) => {
             </li>
           </ul>
           <form name="main-form" className="form-inline my-2 my-lg-0" onSubmit={onSubmitHundler}>
+          <p className="navbar-brand timeLogo">{`Current time:${showDate}`}<span className="time" style={styles}> {timeOfDay}</span></p>
+
             <input className="form-control mr-sm-4" placeholder="Find your films"  value = {inputValue} onChange = {(event) => dispatch(setInputValue(event.target.value))} type="search" />
             <button className="btn btn-outline-success my-0 my-sm-2" type="submit">Search</button>
           </form>
@@ -56,7 +86,6 @@ const Header = ({requestAxious,inputValue,dispatch}) => {
 
 //Это тоже можно было пропсами перекинуть а не создавать тут отдельно connect
 const mapStateToProps = store => {
-  console.log("header", store) //получил доступ к стору
   return { 
     inputValue: store.main.inputValue,   //ЗАПИМУЮ В ЄТОТ КОМПОНЕНТ ПРОПС iNPUTvALUE В КОТОРОМ БУДЕТ со стора редюсера main inputValue значение
     }

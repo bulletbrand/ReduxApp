@@ -37,7 +37,6 @@ export class Moreinfo extends React.Component {
               <h5 className="card-title">{info.name}</h5>
               <h4 className="card-title">{info.type}</h4>
               <p className="card-text">{summaryq}</p>
-              <a className="btn btn-primary favorBtn " href="#">Favorite</a>
               <Link to="/" className="btn btn-primary ml-4 InfoBtn ">Back</Link >
             </div>
           </div>

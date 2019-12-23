@@ -17,7 +17,6 @@ const PATH_API_URL = 'http://api.tvmaze.com/search/shows?q=';
 
 class App extends Component {
 
-
   requestAxious = (value) => {
      axios.get(`${PATH_API_URL}${value}`)
       .then(res => {
@@ -27,14 +26,12 @@ class App extends Component {
   }
 
 
-
    addToFavor = (show)=> {
 
-    
-//пройтись по всему массиву и менять цвет ток на тех єлементах где кликнул
-/*
+
       const idx = this.props.main.data.findIndex((el) => el.show.id === show.id);
-      const oldItem = this.props.main.data[idx];
+     
+      const oldItem = this.props.main.data[idx].show;
       const newItem = { ...oldItem, colorStatus: true }
 
      const newData = [                       //вернуть с новым свойством конкретный елемент в стейт а не все!! вот в чем прикол
@@ -42,11 +39,12 @@ class App extends Component {
         newItem,
         ... this.props.main.data.slice(idx + 1)
       ]
-      console.log(newData)
-      this.props.changeColorAction(newData);
+console.log("new",newData)
+     //this.props.setRequestAction(newData); 
+     //отправлять Эту парашу в другой массив просто который не переберается не подвязан и оттуда потом вытягивать статус
 
 
-*/
+
 
 this.props.favorDataAction(JSON.parse(localStorage.getItem('favoriteStore')))
 
@@ -98,6 +96,7 @@ this.props.favorDataAction(JSON.parse(localStorage.getItem('favoriteStore')))
 
   render() {
     const { data, preloader } = this.props.main;
+  
     const { favorite } = this.props.favorite;
     return (
       <React.Fragment>
@@ -144,3 +143,22 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(App)
+
+/*
+
+      const idx = this.props.main.data.findIndex((el) => el.show.id === show.id);
+      const result = this.props.main.data.map(({show}) => {
+        if(show.id === show.id) {
+        return {...show,colorStatus: false }
+        }
+      })
+      console.log("result", result)
+      const oldItem = this.props.main.data[idx];
+      const newItem = { ...oldItem, colorStatus: true }
+
+     const newData = [                       //вернуть с новым свойством конкретный елемент в стейт а не все!! вот в чем прикол
+        ... this.props.main.data.slice(0, idx),
+        newItem,
+        ... this.props.main.data.slice(idx + 1)
+      ]
+      */

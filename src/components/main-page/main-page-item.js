@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom'
 
 
 const MainPageItem  = ({ show, addToFavor,color }) => {
+    console.log("aaa",show);
     const colorBtn = { background: show.colorStatus ? 'red' : 'black' }
     const label = show.colorStatus ? 'Added' : 'Favorite'
 

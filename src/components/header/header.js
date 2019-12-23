@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { setInputValue } from '../../actions/InputAction'
-import { Link } from 'react-router-dom'
+import { Link,NavLink} from 'react-router-dom'
 import './header.css'
 
 //main  передал пропсом через connect потому автоматом доступны через mapStateToProps
@@ -42,7 +42,7 @@ const Header = ({requestAxious,inputValue,dispatch}) => {
     styles.color = "black"
   }
 
-
+//const hide = {display:  (<Route exact path="/">) ? 'none': 'block'}
  
   return (
     <div>
@@ -58,19 +58,19 @@ const Header = ({requestAxious,inputValue,dispatch}) => {
           <ul className="navbar-nav mt-2 mt-lg-0">
 
             <li className="nav-item ">
-              <Link to="/" className="nav-link"><i className="fas fa-bars"></i> Main films </Link >
+              <NavLink activeStyle={{color:"green"}} exact to="/"  className="nav-link"><i className="fas fa-bars"></i> Main films </NavLink >
             </li>
 
 
             <li className="nav-item">
-              <Link to="/favorite" className="nav-link"><i className="fas fa-file"></i> Faforite films</Link >
+              <NavLink activeStyle={{color:"green"}} to="/favorite" className="nav-link"><i className="fas fa-file"></i> Faforite films</NavLink >
             </li>
 
             <li className="nav-item">
-              <Link to="/aboutus" className="nav-link"><i className="fas fa-cloud"></i> About us</Link >
+              <NavLink activeStyle={{color:"green"}} to="/aboutus" className="nav-link"><i className="fas fa-cloud"></i> About us</NavLink >
             </li>
           </ul>
-          <form name="main-form" className="form-inline my-2 my-lg-0" onSubmit={onSubmitHundler}>
+          <form name="main-form" className="form-inline my-2 my-lg-0"  onSubmit={onSubmitHundler}>
           <p className="navbar-brand timeLogo">{`Current time:${showDate}`}<span className="time" style={styles}> {timeOfDay}</span></p>
 
             <input className="form-control mr-sm-4" placeholder="Find your films"  value = {inputValue} onChange = {(event) => dispatch(setInputValue(event.target.value))} type="search" />

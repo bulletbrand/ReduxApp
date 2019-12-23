@@ -8,11 +8,11 @@ import './favorite-page.css'
 const FavoritePage = ({favorite,addToFavor}) => {
 //вытащить пропсом с стора массив файворит ииии после этого прокинуть в компонент и там подставить
 
-  const arrayFavor = (localStorage.getItem('favoriteStore')) ? JSON.parse(localStorage.getItem('favoriteStore')).map((elem) => (
+  const arrayFavor =favorite.map((elem) => (
     <div key={elem.id}>
       <FavoritePageItem data = {elem} addToFavor = {()=>addToFavor(elem)} />
     </div>
-  )) : -1;
+  ));
 
   
   return (

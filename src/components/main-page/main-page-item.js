@@ -8,10 +8,10 @@ import { Link } from 'react-router-dom'
 
 
 
-const MainPageItem  = ({ show, addToFavor,color }) => {
-    console.log("aaa",show);
-    const colorBtn = { background: show.colorStatus ? 'red' : 'black' }
-    const label = show.colorStatus ? 'Added' : 'Favorite'
+const MainPageItem  = ({ show, addToFavor,changeColor }) => {
+    console.log("aaa",changeColor);
+    const colorBtn = { background: changeColor ? 'red' : 'black' }
+    const label = changeColor ? 'Added' : 'Favorite'
 
     const url = "http://chto-takoe-lyubov.net/wp-content/uploads/2017/08/voprositelnyy-znak-stikhi.jpg";
     const imagesq = (!show.image) ? url : show.image.medium; //так как некоторые image с API были null

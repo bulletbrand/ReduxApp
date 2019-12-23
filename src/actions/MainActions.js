@@ -7,8 +7,16 @@ export const GET_LOCAL = 'GET_LOCAL';
 export const GET_INFO = 'GET_INFO';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const GET_FAVOR = 'GET_FAVOR';
+export const CHANGE_COLOR = 'CHANGE_COLOR';
 
 
+
+export const changeBtn = (data) => {
+  return {
+    type: CHANGE_COLOR,
+    payload: data,
+  }
+}
 
 
 
@@ -53,9 +61,5 @@ setTimeout(() => {
         payload: data,
       })
     } , 1000) 
-
-
-   
-
   }
 }

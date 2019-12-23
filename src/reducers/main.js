@@ -1,4 +1,4 @@
-import { SEND_REQUEST, GET_REQUEST_SUCCESS, GET_LOCAL, GET_INFO} from '../actions/MainActions'
+import { SEND_REQUEST, GET_REQUEST_SUCCESS, GET_LOCAL, GET_INFO,CHANGE_COLOR} from '../actions/MainActions'
 import { ACTION_CHANGE_INPUT_VALUE } from '../actions/InputAction'
 
 const initialState = {
@@ -14,11 +14,9 @@ const initialState = {
         type: '',
       },
       colorStatus: false,
-
     },
 
   ],
-  preloader: false,
   inputValue: '',
   info: [],
 }
@@ -41,7 +39,24 @@ export function mainReducer(state = initialState, action) {
 
     case GET_INFO:
       return { ...state, info: action.payload }  //это при перезагрузке страници чтобы данные оставались, нам ведь преоадер уже не нужен
-   
+      
+
+    case CHANGE_COLOR:
+//этот код потом вынести отсюда и перебиреть вытаскивая с редакс со стора в app компоненте
+      const element = state.data.find((el) => el.show.id === action.payload);
+      const elementIndex = state.data.findIndex(el => el.show.id === action.payload);
+
+      
+      element.show.changeColor = !element.show.changeColor;
+      
+      const newArr = [...state.data];
+      newArr[elementIndex] = element;
+
+      return {
+        ...state,
+        data: newArr
+      }
+
 
     default:
       return state
@@ -50,6 +65,22 @@ export function mainReducer(state = initialState, action) {
 
 
 
-/*
-      return { ...state, data: [...state.data ,...action.payload], preloader: false } //данные тутачки приходят а не в самом запросе
-*/
+
+      /* мой варик  почему не сработал?
+
+      
+         const element = state.data.find((el) => el.show.id === action.payload);
+    const elementIndex = state.data.findIndex(el => el.show.id === action.payload);
+
+    
+    element.show.changeColor = !element.show.changeColor;
+    
+    
+    return  {
+      ...state,
+      data:[...state.data.slice(0,elementIndex),
+      element,
+      ...state.data.slice(elementIndex + 1)]
+      }
+
+      */

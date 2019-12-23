@@ -1,22 +1,24 @@
 import React, { Component } from 'react'
+import axios from 'axios'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 import MainPage from '../components/main-page/main-page'
 import Header from '../components/header/header'
 import FavoritePage from '../components/favorite-page/favorite-page'
 import Moreinfo from '../components/more-info-page/more-info-page'
-import { setRequest, getLocal,changeColor } from '../actions/MainActions'
+import { setRequest, getLocal,changeBtn } from '../actions/MainActions'
 import { favorData } from '../actions/MainActions'
 
 
 
-import axios from 'axios'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
-
-
 const PATH_API_URL = 'http://api.tvmaze.com/search/shows?q=';
+
+
+
 
 class App extends Component {
 
+  //запрос => сохранение данных в локалку => диспатч их с локалки в стор (пропсами фция передается в main чтобы инпут валью забрать)
   requestAxious = (value) => {
      axios.get(`${PATH_API_URL}${value}`)
       .then(res => {
@@ -27,35 +29,20 @@ class App extends Component {
 
 
    addToFavor = (show)=> {
-
-
-      const idx = this.props.main.data.findIndex((el) => el.show.id === show.id);
      
-      const oldItem = this.props.main.data[idx].show;
-      const newItem = { ...oldItem, colorStatus: true }
 
-     const newData = [                       //вернуть с новым свойством конкретный елемент в стейт а не все!! вот в чем прикол
-        ... this.props.main.data.slice(0, idx),
-        newItem,
-        ... this.props.main.data.slice(idx + 1)
-      ]
-console.log("new",newData)
-     //this.props.setRequestAction(newData); 
-     //отправлять Эту парашу в другой массив просто который не переберается не подвязан и оттуда потом вытягивать статус
+    console.log(show.id)
 
+    localStorage.setItem('favorBtnColor',show.id );
 
-
-
-this.props.favorDataAction(JSON.parse(localStorage.getItem('favoriteStore')))
+    this.props.changeBtnAction(show.id);
 
 
     if (!localStorage.getItem('favoriteStore')) {
       localStorage.setItem('favoriteStore', '[]');
     }
 
-
     const arrMovieFavorite = JSON.parse(localStorage.getItem('favoriteStore'));
-
 
     var positionMovie;
     if (arrMovieFavorite.length) {
@@ -67,14 +54,15 @@ this.props.favorDataAction(JSON.parse(localStorage.getItem('favoriteStore')))
 
     if (positionMovie !== -1) {
       arrMovieFavorite.splice(positionMovie, 1);
-      localStorage.setItem('favoriteStore', JSON.stringify(arrMovieFavorite));
-      this.props.favorDataAction(JSON.parse(localStorage.getItem('favoriteStore')))
+      localStorage.setItem('favoriteStore', JSON.stringify(arrMovieFavorite)); //удаляю с локалки
+      this.props.favorDataAction(JSON.parse(localStorage.getItem('favoriteStore'))) //удаляю со стора
 
       return;
     }
 
     arrMovieFavorite.push(show)
-    localStorage.setItem('favoriteStore', JSON.stringify(arrMovieFavorite))
+    localStorage.setItem('favoriteStore', JSON.stringify(arrMovieFavorite)) //добавляю в локал сторейдж
+    this.props.favorDataAction(JSON.parse(localStorage.getItem('favoriteStore'))) //доавляю стор
 
     return;
   }
@@ -83,9 +71,11 @@ this.props.favorDataAction(JSON.parse(localStorage.getItem('favoriteStore')))
 
   //причина по которой пришлось локал использовать это то что с запроса прелоадер был
   componentDidMount() {
+    //чтобы при обновлении страници массив заполнился в сторе локалкой и не пропали данные
     if (localStorage.getItem('favoriteStore')) {
 
     this.props.favorDataAction(JSON.parse(localStorage.getItem('favoriteStore')))
+    
     }
 
     if (localStorage.getItem('data')) {
@@ -135,6 +125,7 @@ const mapDispatchToProps = dispatch => ({
   setRequestAction: data => dispatch(setRequest(data)),
   getRequestFromLocal: data => dispatch(getLocal(data)),
   favorDataAction: (data) => dispatch(favorData(data)),
+  changeBtnAction: (data) => dispatch(changeBtn(data)),
 })
 
 

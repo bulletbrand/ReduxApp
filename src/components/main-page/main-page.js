@@ -6,14 +6,14 @@ export default class MainPage extends Component {
 
   render() {
 
-    const {data, preloader,addToFavor,color} =this.props;
+    const {data, preloader,addToFavor} =this.props;
   
     const dataShow = data.map(({show}) =>(
       <div key={show.id}>
       <MainPageItem 
         show = {show} 
         addToFavor = {()=>addToFavor(show)}
-        
+        changeColor = {show.changeColor}
          />
       </div>
     ))

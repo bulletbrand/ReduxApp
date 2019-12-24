@@ -6,21 +6,17 @@ import MainPage from '../components/main-page/main-page'
 import Header from '../components/header/header'
 import FavoritePage from '../components/favorite-page/favorite-page'
 import Moreinfo from '../components/more-info-page/more-info-page'
-import { setRequest, getLocal,changeBtn } from '../actions/MainActions'
+import { setRequest, getLocal, changeBtn } from '../actions/MainActions'
 import { favorData } from '../actions/MainActions'
 
 
 
 const PATH_API_URL = 'http://api.tvmaze.com/search/shows?q=';
 
-
-
-
 class App extends Component {
 
-  //запрос => сохранение данных в локалку => диспатч их с локалки в стор (пропсами фция передается в main чтобы инпут валью забрать)
   requestAxious = (value) => {
-     axios.get(`${PATH_API_URL}${value}`)
+    axios.get(`${PATH_API_URL}${value}`)
       .then(res => {
         localStorage.setItem('data', JSON.stringify(res.data))
         return this.props.setRequestAction(res.data);
@@ -28,14 +24,11 @@ class App extends Component {
   }
 
 
-   addToFavor = (show)=> {
-     
+  addToFavor = (show) => {
 
-    console.log(show.id)
+    localStorage.setItem('favorBtnColor', JSON.stringify(show.id)); //удаляю с локал
+    this.props.changeBtnAction(JSON.parse(localStorage.getItem('favorBtnColor')))
 
-    localStorage.setItem('favorBtnColor',show.id );
-
-    this.props.changeBtnAction(show.id);
 
 
     if (!localStorage.getItem('favoriteStore')) {
@@ -54,7 +47,7 @@ class App extends Component {
 
     if (positionMovie !== -1) {
       arrMovieFavorite.splice(positionMovie, 1);
-      localStorage.setItem('favoriteStore', JSON.stringify(arrMovieFavorite)); //удаляю с локалки
+      localStorage.setItem('favoriteStore', JSON.stringify(arrMovieFavorite)); //удаляю с локал
       this.props.favorDataAction(JSON.parse(localStorage.getItem('favoriteStore'))) //удаляю со стора
 
       return;
@@ -68,16 +61,11 @@ class App extends Component {
   }
 
 
-
-  //причина по которой пришлось локал использовать это то что с запроса прелоадер был
   componentDidMount() {
-    //чтобы при обновлении страници массив заполнился в сторе локалкой и не пропали данные
+
     if (localStorage.getItem('favoriteStore')) {
-
-    this.props.favorDataAction(JSON.parse(localStorage.getItem('favoriteStore')))
-    
+      this.props.favorDataAction(JSON.parse(localStorage.getItem('favoriteStore')))
     }
-
     if (localStorage.getItem('data')) {
       this.props.getRequestFromLocal(JSON.parse(localStorage.getItem('data')))
     }
@@ -86,7 +74,7 @@ class App extends Component {
 
   render() {
     const { data, preloader } = this.props.main;
-  
+
     const { favorite } = this.props.favorite;
     return (
       <React.Fragment>
@@ -94,15 +82,16 @@ class App extends Component {
         <Router>
 
           <Header requestAxious={this.requestAxious} />
-          <Route exact path="/"><MainPage data={data} preloader={preloader} addToFavor = {this.addToFavor}/></Route>
+          <Route exact path="/"><MainPage data={data} preloader={preloader} addToFavor={this.addToFavor} /></Route>
           <Route exact path="/favorite"><FavoritePage addToFavor={this.addToFavor} favorite={favorite} /></Route>
           <Route exact path="/moreinfo/:id"
             render={({ match }) => {
               const { id } = match.params;
               return <Moreinfo itemid={id} />
             }}>
+
           </Route>
-          
+
         </Router>
 
       </React.Fragment>
@@ -121,7 +110,6 @@ const mapStateToProps = store => {
 
 
 const mapDispatchToProps = dispatch => ({
-
   setRequestAction: data => dispatch(setRequest(data)),
   getRequestFromLocal: data => dispatch(getLocal(data)),
   favorDataAction: (data) => dispatch(favorData(data)),
@@ -129,27 +117,7 @@ const mapDispatchToProps = dispatch => ({
 })
 
 
-
 export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(App)
-
-/*
-
-      const idx = this.props.main.data.findIndex((el) => el.show.id === show.id);
-      const result = this.props.main.data.map(({show}) => {
-        if(show.id === show.id) {
-        return {...show,colorStatus: false }
-        }
-      })
-      console.log("result", result)
-      const oldItem = this.props.main.data[idx];
-      const newItem = { ...oldItem, colorStatus: true }
-
-     const newData = [                       //вернуть с новым свойством конкретный елемент в стейт а не все!! вот в чем прикол
-        ... this.props.main.data.slice(0, idx),
-        newItem,
-        ... this.props.main.data.slice(idx + 1)
-      ]
-      */

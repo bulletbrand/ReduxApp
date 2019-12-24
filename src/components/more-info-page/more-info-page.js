@@ -6,9 +6,8 @@ import { connect } from 'react-redux'
 
 export class Moreinfo extends React.Component {
 
-
   requestInfo = () => {
-     axios.get(`http://api.tvmaze.com/shows/${this.props.itemid}`)
+    axios.get(`http://api.tvmaze.com/shows/${this.props.itemid}`)
       .then(res => {
         localStorage.setItem('info', JSON.stringify(res.data))
         return this.props.infoRequestAction(res.data)
@@ -57,7 +56,6 @@ const mapStateToProps = store => {
 const mapDispatchToProps = dispatch => ({
   infoRequestAction: data => dispatch(infoRequest(data)),
 })
-
 
 
 export default connect(

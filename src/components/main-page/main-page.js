@@ -1,13 +1,13 @@
-import React, { Component } from 'react'
+import React from 'react'
 import MainPageItem from './main-page-item'
+import { connect } from 'react-redux'
 
-export default class MainPage extends Component {
+//вся фишка в том что подключать редакс и выводить данные нужно было со стора тут а не прокидывать пропсами
+//передеать потом 135 урок проф разраб
+const MainPage =({ main:{data, preloader}, addToFavor }) => {
 
 
-  render() {
-
-    const { data, preloader, addToFavor } = this.props;
-
+//@data и preloader вытащил со стора а addToFavor то просто колбек на верх идет в App чтобы потом использоваться еще и в favorite.
     const dataShow = data.map(({ show }) => (
       <div key={show.id}>
         <MainPageItem
@@ -43,7 +43,21 @@ export default class MainPage extends Component {
       </div>
     )
   }
+
+
+
+
+
+const mapStateToProps = store => {
+  return {
+    main: store.main,
+  }
 }
 
 
 
+
+
+export default connect(
+  mapStateToProps,
+)(MainPage)

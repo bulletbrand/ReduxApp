@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { favorData } from '../../actions/MainActions'
 import FavoritePageItem from './favorite-page-item'
 import './favorite-page.css'
 
@@ -34,12 +33,7 @@ const mapStateToProps = store => {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-
-  favorDataAction: data => dispatch(favorData(data)),
-})
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
 )(FavoritePage)

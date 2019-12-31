@@ -5,6 +5,7 @@ const initialState = {
   data: [],
   inputValue: '',
   info: [],
+  currentTime: ''
 }
 
 

@@ -2,8 +2,17 @@ import React from 'react';
 import { connect } from 'react-redux'
 import { favorData } from '../../actions/MainActions'
 import FavoritePageItem from './favorite-page-item'
+import PropTypes from 'prop-types'
 import './favorite-page.css'
 
+
+
+/**
+  * @description  Компонент выводит информацию о избранных фильмах
+  * @param	{object} favorite - массив избранных фильмов из стора
+  * @param	{func} addToFavor - айди который идет пропсом с App через роут свойство match.
+  * @author	Аlexander Matyka
+  */
 
 const FavoritePage = ({ favorite, addToFavor }) => {
   const arrayFavor = favorite.map((elem) => (
@@ -30,7 +39,7 @@ const FavoritePage = ({ favorite, addToFavor }) => {
 
 const mapStateToProps = store => {
   return {
-    favorite: store.favorite.favorite
+    favorite: store.favorite.favorite,
   }
 }
 
@@ -43,3 +52,9 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(FavoritePage)
+
+
+FavoritePage.propTypes = {
+  favorite:  PropTypes.array.isRequired,
+  addToFavor:  PropTypes.func,
+};

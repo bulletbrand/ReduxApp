@@ -1,10 +1,20 @@
 import React from 'react';
 import './main-page.css'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
 
+
+/**
+  * @description  Вспомогательный компонент который представляет из себя еденицу с фильмом для главной страници
+  * @param	{func} show - массив фильмов
+  * @param	{func} addToFavor -фция колбек которая поднмается в App компонент и переиспользуется
+  * @param	{bool} changeColor - парметр отвечбщий за флаг цаета со стора
+  * @author	Аlexander Matyka
+  */
+
 const MainPageItem = ({ show, addToFavor, changeColor }) => {
-    console.log("aaa", changeColor);
+
     const colorBtn = { background: changeColor ? 'red' : 'black' }
     const label = changeColor ? 'Added' : 'Favorite'
 
@@ -27,3 +37,9 @@ const MainPageItem = ({ show, addToFavor, changeColor }) => {
 }
 export default MainPageItem;
 
+MainPageItem.propTypes = {
+    show:  PropTypes.object.isRequired,
+    changeColor:  PropTypes.bool,
+    addToFavor:  PropTypes.func.isRequired,  
+  };
+  

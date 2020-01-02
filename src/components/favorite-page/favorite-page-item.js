@@ -1,7 +1,17 @@
 import React from 'react';
 import './favorite-page.css'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
+
+
+
+/**
+  * @description  Компонент содержащий n еденицу фильма из избранного
+  * @param	{Array} data - айди который идет пропсом с App через роут свойство match.
+  * @param {func} addToFavor -фция добавления и удаления с избранного передается как колбек
+  * @author	Аlexander Matyka
+  */
 
 const FavoritePageItem = ({ data, addToFavor }) => {
 
@@ -24,3 +34,8 @@ const FavoritePageItem = ({ data, addToFavor }) => {
 }
 
 export default FavoritePageItem;
+
+FavoritePageItem.propTypes = {
+    data:  PropTypes.object.isRequired,
+    addToFavor:  PropTypes.func,
+  };

@@ -1,35 +1,42 @@
-import React, { Component } from 'react'
+import React, { useEffect } from 'react'
 import axios from 'axios'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
-import MainPage from '../components/main-page/main-page'
-import Header from '../components/header/header'
-import FavoritePage from '../components/favorite-page/favorite-page'
-import Moreinfo from '../components/more-info-page/more-info-page'
-import { setRequest, getLocal, changeBtn } from '../actions/MainActions'
-import { favorData } from '../actions/MainActions'
-
+import MainPage from './main-page/main-page'
+import Header from './header/header'
+import FavoritePage from './favorite-page/favorite-page'
+import { Moreinfo } from './more-info-page/more-info-page'
+import { setRequest,forBtn, getLocal, changeBtn,favorData } from '../actions/MainActions'
+import PropTypes from 'prop-types'
 
 
 const PATH_API_URL = 'http://api.tvmaze.com/search/shows?q=';
 
-class App extends Component {
 
-  requestAxious = (value) => {
+/**
+  * @description  Основной компонент 
+  * @param	{func} setRequestAction - action creator который принимается пропсом и обновляет store.data
+  * @param	{func} changeBtnAction - action creator который принимается пропсом и обновляет статус кнопки в store.data
+  * @param	{func} favorDataAction -  action creator который принимается пропсом и обновляет store.favorite
+  * @param	{func} getRequestFromLocal -  action creator который принимается пропсом и обновляет store.data при перезагрузке страници с localStorage
+  * @author	Аlexander Matyka
+  */
+
+const App = ({ setRequestAction, changeBtnAction, favorDataAction, getRequestFromLocal,forBtnAction }) => {
+
+  const requestAxious = (value) => {
     axios.get(`${PATH_API_URL}${value}`)
       .then(res => {
         localStorage.setItem('data', JSON.stringify(res.data))
-        return this.props.setRequestAction(res.data);
+        return setRequestAction(res.data);
       })
   }
 
 
-  addToFavor = (show) => {
+  const addToFavor = (show) => {
 
     localStorage.setItem('favorBtnColor', JSON.stringify(show.id)); //удаляю с локал
-    this.props.changeBtnAction(JSON.parse(localStorage.getItem('favorBtnColor')))
-
-
+    changeBtnAction(JSON.parse(localStorage.getItem('favorBtnColor')))
 
     if (!localStorage.getItem('favoriteStore')) {
       localStorage.setItem('favoriteStore', '[]');
@@ -48,76 +55,92 @@ class App extends Component {
     if (positionMovie !== -1) {
       arrMovieFavorite.splice(positionMovie, 1);
       localStorage.setItem('favoriteStore', JSON.stringify(arrMovieFavorite)); //удаляю с локал
-      this.props.favorDataAction(JSON.parse(localStorage.getItem('favoriteStore'))) //удаляю со стора
+      favorDataAction(JSON.parse(localStorage.getItem('favoriteStore'))) //удаляю со стора
 
       return;
     }
 
     arrMovieFavorite.push(show)
     localStorage.setItem('favoriteStore', JSON.stringify(arrMovieFavorite)) //добавляю в локал сторейдж
-    this.props.favorDataAction(JSON.parse(localStorage.getItem('favoriteStore'))) //доавляю стор
+    favorDataAction(JSON.parse(localStorage.getItem('favoriteStore'))) //доавляю стор
 
     return;
   }
 
 
-  componentDidMount() {
-
+  useEffect(() => {
     if (localStorage.getItem('favoriteStore')) {
-      this.props.favorDataAction(JSON.parse(localStorage.getItem('favoriteStore')))
+      favorDataAction(JSON.parse(localStorage.getItem('favoriteStore')))
     }
+  
     if (localStorage.getItem('data')) {
-      this.props.getRequestFromLocal(JSON.parse(localStorage.getItem('data')))
+      getRequestFromLocal(JSON.parse(localStorage.getItem('data')))
     }
-  }
+    if (localStorage.getItem('saveWithBtn')) {
+      forBtnAction(JSON.parse(localStorage.getItem('saveWithBtn')))
+
+    }
+    
+  }, []);
 
 
-  render() {
-    const { data, preloader } = this.props.main;
+  const test = {visibility:'hidden'}
 
-    const { favorite } = this.props.favorite;
-    return (
-      <React.Fragment>
+//addToFavor через контекст апи прокинуть
+  return (
+    <React.Fragment>
 
-        <Router>
+      <Router>
 
-          <Header requestAxious={this.requestAxious} />
-          <Route exact path="/"><MainPage data={data} preloader={preloader} addToFavor={this.addToFavor} /></Route>
-          <Route exact path="/favorite"><FavoritePage addToFavor={this.addToFavor} favorite={favorite} /></Route>
-          <Route exact path="/moreinfo/:id"
-            render={({ match }) => {
-              const { id } = match.params;
-              return <Moreinfo itemid={id} />
-            }}>
-
-          </Route>
-
-        </Router>
-
-      </React.Fragment>
-
-    )
-  }
-}
+        <Route exact path="/">
+        <Header requestAxious={requestAxious} />
+        <MainPage addToFavor={addToFavor} />
+      </Route>
 
 
-const mapStateToProps = store => {
-  return {
-    main: store.main,
-    favorite: store.favorite
-  }
+
+        <Route exact path="/favorite">
+        <Header requestAxious={requestAxious} test = {test}/>
+        <FavoritePage addToFavor={addToFavor} />
+        </Route>
+
+
+        <Route exact path="/moreinfo/:id"
+          render={({ match }) => {
+            const { id } = match.params;
+            return <Moreinfo itemid={id} />
+          }}>
+
+        </Route>
+
+      </Router>
+
+    </React.Fragment>
+
+  )
 }
 
 
 const mapDispatchToProps = dispatch => ({
   setRequestAction: data => dispatch(setRequest(data)),
   getRequestFromLocal: data => dispatch(getLocal(data)),
-  favorDataAction: (data) => dispatch(favorData(data)),
   changeBtnAction: (data) => dispatch(changeBtn(data)),
+  favorDataAction: (data) => dispatch (favorData(data)),
+  forBtnAction:(data) => dispatch(forBtn(data))
 })
 
 
 export default connect(
-  mapStateToProps,
+  () =>({}),
   mapDispatchToProps
 )(App)
+
+App.propTypes = {
+  setRequestAction: PropTypes.func.isRequired,
+  changeBtnAction: PropTypes.func.isRequired,
+  favorDataAction: PropTypes.func.isRequired,
+  getRequestFromLocal: PropTypes.func.isRequired,
+};
+
+
+

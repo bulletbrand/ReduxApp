@@ -1,20 +1,19 @@
-import { SEND_REQUEST, GET_REQUEST_SUCCESS, GET_LOCAL, GET_INFO,CHANGE_COLOR,REQUEST_ERROR} from '../actions/MainActions'
+import {FETCH_BOOK_REQUEST,FETCH_BOOK_SUCCESS, GET_LOCAL,CHANGE_COLOR_BTN,REQUEST_ERROR,FOR_BTN} from '../actions/MainActions'
 import { ACTION_CHANGE_INPUT_VALUE } from '../actions/InputAction'
 
 const initialState = {
   data: [],
   inputValue: '',
-  info: [],
 }
 
 
 
 export function mainReducer(state = initialState, action) {
   switch (action.type) {
-    case SEND_REQUEST:
+    case FETCH_BOOK_REQUEST:
       return { ...state, preloader: true }  //начинается запрос и флажок ставится тру тоесть показать прелоадер
 
-    case GET_REQUEST_SUCCESS:
+    case FETCH_BOOK_SUCCESS:
       return { ...state, data:action.payload, preloader: false } //данные тутачки приходят а не в самом запросе
 
     case REQUEST_ERROR:
@@ -26,11 +25,7 @@ export function mainReducer(state = initialState, action) {
     case GET_LOCAL:
       return { ...state, data: action.payload }  
 
-    case GET_INFO:
-      return { ...state, info: action.payload }  
-      
-
-    case CHANGE_COLOR:
+    case CHANGE_COLOR_BTN:
       const element = state.data.find((el) => el.show.id === action.payload);
       const elementIndex = state.data.findIndex(el => el.show.id === action.payload);
       element.show.changeColor = !element.show.changeColor;

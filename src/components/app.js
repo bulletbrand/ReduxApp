@@ -6,7 +6,7 @@ import MainPage from './main-page/main-page'
 import Header from './header/header'
 import FavoritePage from './favorite-page/favorite-page'
 import { Moreinfo } from './more-info-page/more-info-page'
-import { setRequest,forBtn, getLocal, changeBtn,favorData } from '../actions/MainActions'
+import { setRequest, forBtn, getLocal, changeBtn, favorData } from '../actions/MainActions'
 import PropTypes from 'prop-types'
 
 
@@ -22,7 +22,7 @@ const PATH_API_URL = 'http://api.tvmaze.com/search/shows?q=';
   * @author	Аlexander Matyka
   */
 
-const App = ({ setRequestAction, changeBtnAction, favorDataAction, getRequestFromLocal,forBtnAction }) => {
+const App = ({ setRequestAction, changeBtnAction, favorDataAction, getRequestFromLocal, forBtnAction }) => {
 
   const requestAxious = (value) => {
     axios.get(`${PATH_API_URL}${value}`)
@@ -72,7 +72,7 @@ const App = ({ setRequestAction, changeBtnAction, favorDataAction, getRequestFro
     if (localStorage.getItem('favoriteStore')) {
       favorDataAction(JSON.parse(localStorage.getItem('favoriteStore')))
     }
-  
+
     if (localStorage.getItem('data')) {
       getRequestFromLocal(JSON.parse(localStorage.getItem('data')))
     }
@@ -80,35 +80,39 @@ const App = ({ setRequestAction, changeBtnAction, favorDataAction, getRequestFro
       forBtnAction(JSON.parse(localStorage.getItem('saveWithBtn')))
 
     }
-    
+
   }, []);
 
-
-  const test = {visibility:'hidden'}
-
-//addToFavor через контекст апи прокинуть
+  //добавить в about us формочку и вывод типов с табами
   return (
     <React.Fragment>
 
       <Router>
 
+
+        <Route exact path="/:favorite?:aboutus?"
+          render={({ match }) => {
+            return <Header requestAxious={requestAxious} match={match} />
+
+          }}>
+
+        </Route>
+
         <Route exact path="/">
-        <Header requestAxious={requestAxious} />
-        <MainPage addToFavor={addToFavor} />
-      </Route>
+          <MainPage addToFavor={addToFavor} />
+        </Route>
 
 
 
         <Route exact path="/favorite">
-        <Header requestAxious={requestAxious} test = {test}/>
-        <FavoritePage addToFavor={addToFavor} />
+          <FavoritePage addToFavor={addToFavor} />
         </Route>
 
 
         <Route exact path="/moreinfo/:id"
           render={({ match }) => {
             const { id } = match.params;
-            return <Moreinfo itemid={id} />
+            return <Moreinfo itemid={id} match={match} />
           }}>
 
         </Route>
@@ -125,13 +129,13 @@ const mapDispatchToProps = dispatch => ({
   setRequestAction: data => dispatch(setRequest(data)),
   getRequestFromLocal: data => dispatch(getLocal(data)),
   changeBtnAction: (data) => dispatch(changeBtn(data)),
-  favorDataAction: (data) => dispatch (favorData(data)),
-  forBtnAction:(data) => dispatch(forBtn(data))
+  favorDataAction: (data) => dispatch(favorData(data)),
+  forBtnAction: (data) => dispatch(forBtn(data))
 })
 
 
 export default connect(
-  () =>({}),
+  () => ({}),
   mapDispatchToProps
 )(App)
 

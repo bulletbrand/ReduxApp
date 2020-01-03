@@ -16,13 +16,21 @@ import './header.css'
   * @param	{func} requestAxious - фция с запросом которая в теле отправляет сразу данные в стор
   * @param	{string} inputValue -значение с контролируемого компонента инпут взятые пропсом со стора
   * @param	{func} dispatch - Это свойство стора которое позволяет диспатчить/передавать екшен криетор в  редюсер сразу, и не нужно меп диспетч ту стор
+  * @param {obj} match - фция использует свойство обьект роутов match для того чтобы реализовать внутри скрытие формы в зависимости от текущего урла
   * @author	Аlexander Matyka
   */
 
-const Header = ({requestAxious, inputValue, dispatch, test }) => {
+const Header = ({requestAxious, inputValue, dispatch,match }) => {
+
+console.log('math',match);
+
+const [hideForm, setHideForm] = useState( {visibility:'visible'});
 
 
-
+  useEffect(() => {
+    (match.url !== '/')?  setHideForm({visibility:'hidden'}) :
+    setHideForm({visibility:'visible'})
+  }, [match.url]);
 
 
   const onSubmitHundler = (e) => {
@@ -38,6 +46,8 @@ const Header = ({requestAxious, inputValue, dispatch, test }) => {
   }
 
 
+
+
   const date = new Date()
   const hours = date.getHours()
 
@@ -46,6 +56,8 @@ const Header = ({requestAxious, inputValue, dispatch, test }) => {
   (hours >= 12 && hours < 17) ?  "afternoon":
   (hours >= 17 && hours < 24) ?  "evening":
    "night"
+
+
 
 
   return (
@@ -74,7 +86,7 @@ const Header = ({requestAxious, inputValue, dispatch, test }) => {
               <NavLink activeStyle={{ color: "green" }} to="/aboutus" className="nav-link"><i className="fas fa-cloud"></i> About us</NavLink >
             </li>
           </ul>
-          <form name="main-form"  style={test} className="form-inline my-2 my-lg-0"  onSubmit={onSubmitHundler}>
+          <form name="main-form"  style={hideForm} className="form-inline my-2 my-lg-0"  onSubmit={onSubmitHundler}>
             <p className="navbar-brand timeLogo"> <Moment format="YYYY-MM-DD HH:mm:ss" interval={1000} /><span className="time"> {timeOfDay}</span></p>
 
             <input className="form-control mr-sm-4"  placeholder="Find your films" value={inputValue} onChange={inputControll} type="search" />

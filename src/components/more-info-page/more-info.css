@@ -1,0 +1,19 @@
+.col-md-12 {
+  margin-top:50px;
+}
+
+.info-card {
+  width: 1000px;
+}
+
+img {
+  margin:0 auto;
+}
+
+.card-body {
+text-align: center;
+}
+
+h2 {
+  text-align: center;
+}
